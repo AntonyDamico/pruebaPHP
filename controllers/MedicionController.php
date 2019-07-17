@@ -8,6 +8,9 @@ class MedicionController
     public static function index()
     {
         $mediciones = (new Medicion())->selectAll();
+        foreach ($mediciones as $medicion) {
+            $medicion->fecha = date_format(date_create($medicion->fecha), "d/m/Y");
+        }
         include "views/index.php";
     }
 

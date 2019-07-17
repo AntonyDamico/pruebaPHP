@@ -12,10 +12,8 @@
 }
 
 .container {
-    display: flex;
-    flex-direction: row;
     justify-content: center;
-    width: 50%;
+    /*width: 50%;*/
     margin: 20px auto;
     align-items: center;
     max-width: 500px;
@@ -66,4 +64,31 @@ textarea {
     border-radius: 4px;
     background-color: firebrick;
     color: white;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.temp-elem {
+    background-color: whitesmoke;
+    justify-content: center;
+    margin: 30px;
+    font-size: 20px;
+    min-width: 200px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.temp-elem > p {
+    background-color: whitesmoke;
+    margin: 12px 10px;
+    text-align: center;
+}
+
+.min, .max {
+    margin: 0 5px;
+    background-color: whitesmoke;
 }

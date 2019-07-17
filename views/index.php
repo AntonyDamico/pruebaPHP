@@ -31,4 +31,26 @@
 
     </form>
 </div>
+
+<div class="row">
+
+    <?php foreach ($mediciones as $medicion): ?>
+        <div class="temp-elem">
+            <p><?= $mediciones[0]->fecha ?> </p>
+            <p><?= $mediciones[0]->observaciones ?></p>
+            <p>
+                <span class="max">
+                    <?= $mediciones[0]->temp_max ?>°C
+                </span>
+                <span class="min">
+                    <?= $mediciones[0]->temp_min ?>°C
+                </span>
+            </p>
+            <p><?= $mediciones[0]->prev_precipita ?>%</p>
+        </div>
+    <?php endforeach; ?>
+
+
+</div>
+
 <?php require "views/partials/footer.php" ?>
