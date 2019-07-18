@@ -24,11 +24,33 @@ class Medicion
 
     public function save(array $data)
     {
-//        $data['fecha'] = date('Y-m-d');
+        if (!$this->dateExists()) {
+            $this->insert($data);
+        } else {
+            $this->update($data);
+        }
+    }
+
+    private function insert($data)
+    {
         $query =
             "insert into mediciones_diarias 
             (fecha, temp_max, temp_min, prev_precipita, observaciones)
             values (?, ?, ?, ?, ?) ";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([
+            (float)$data['maxTemp'],
+            (float)$data['minTemp'],
+            (int)$data['precipitation'],
+            $data['observations']
+        ]);
+    }
+
+    private function update($data)
+    {
+        $query =
+            "update mediciones_diarias set 
+            fecha=?, temp_max=?, temp_min=?, prev_precipita=?, observaciones=?";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([
             $data['fecha'],
@@ -39,15 +61,24 @@ class Medicion
         ]);
     }
 
+    private function dateExists()
+    {
+        $sql = "select * from mediciones_diarias where fecha = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(1, $_POST['fecha'], PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public static function validateInput()
     {
         if (!self::requiredFields())
             throw new Exception('Complete todos los campos necesarios');
-        if(!self::valuesAreNumeric())
+        if (!self::valuesAreNumeric())
             throw new Exception('Los valores de temperatura y precipitación deben ser numéricos');
         if (!self::correctPrecipitation())
             throw new Exception('La precipitacion solo puede estar entre 0 y 100.');
-        if(!self::minTempLessThanMax())
+        if (!self::minTempLessThanMax())
             throw new Exception('El valor de la temperatura máxima debe ser mayor al de la temperatura mínima.');
         return true;
     }
@@ -68,11 +99,13 @@ class Medicion
             $_POST['precipitation'] <= 100;
     }
 
-    private static function minTempLessThanMax() {
+    private static function minTempLessThanMax()
+    {
         return $_POST['minTemp'] < $_POST['maxTemp'];
     }
 
-    private static function valuesAreNumeric() {
+    private static function valuesAreNumeric()
+    {
         return
             is_numeric($_POST['maxTemp']) &&
             is_numeric($_POST['minTemp']) &&
