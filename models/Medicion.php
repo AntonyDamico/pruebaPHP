@@ -16,7 +16,7 @@ class Medicion
     {
         $statement = $this->pdo->prepare(
             "SELECT * FROM mediciones_diarias
-            WHERE fecha >= (CURDATE() - INTERVAL 3 DAY)"
+            WHERE fecha >= (CURDATE() - INTERVAL 3 DAY) order by fecha"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
@@ -39,6 +39,7 @@ class Medicion
             values (?, ?, ?, ?, ?) ";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([
+            $data['fecha'],
             (float)$data['maxTemp'],
             (float)$data['minTemp'],
             (int)$data['precipitation'],
@@ -50,14 +51,14 @@ class Medicion
     {
         $query =
             "update mediciones_diarias set 
-            fecha=?, temp_max=?, temp_min=?, prev_precipita=?, observaciones=?";
+            temp_max=?, temp_min=?, prev_precipita=?, observaciones=? where fecha = ?";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([
-            $data['fecha'],
             (float)$data['maxTemp'],
             (float)$data['minTemp'],
             (int)$data['precipitation'],
-            $data['observations']
+            $data['observations'],
+            $data['fecha']
         ]);
     }
 

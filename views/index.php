@@ -35,6 +35,9 @@
     </form>
 </div>
 
+
+<h2 class="subtitle">Últimos Tres Días</h2>
+
 <div class="row">
 
     <?php foreach ($mediciones as $medicion): ?>
