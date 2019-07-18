@@ -24,7 +24,7 @@ class Medicion
 
     public function save(array $data)
     {
-        $data['fecha'] = date('Y-m-d');
+//        $data['fecha'] = date('Y-m-d');
         $query =
             "insert into mediciones_diarias 
             (fecha, temp_max, temp_min, prev_precipita, observaciones)

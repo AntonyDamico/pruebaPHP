@@ -19,7 +19,7 @@ class MedicionController
         try {
             Medicion::validateInput();
             (new Medicion)->save($_POST);
-            header('Location: /?status=success');
+            header('Location: /?status=success&message=Medición Agregada');
         } catch (Exception $exception) {
             header('Location: /?status=error&message=' . $exception->getMessage());
         }

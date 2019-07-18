@@ -3,11 +3,14 @@
 <h1 class="title">Datos Metereológicos</h1>
 
 <?php if (isset($_GET['status'])): ?>
-    <p class="message"><?= $_GET['message'] ?></p>
+    <p class="message <?= $_GET['status'] ?>"><?= $_GET['message'] ?></p>
 <?php endif; ?>
 
 <div class="container">
     <form action="save.php" method="POST">
+
+        <input type="date" name="fecha" id="" placeholder="Ingrese la fecha">
+
         <label for="maxTemp">Temperatura Máxima (°C)</label>
         <input type="number" name="maxTemp" id="maxTemp">
 
@@ -23,7 +26,7 @@
         <label for="observations">Observaciones</label>
         <textarea
                 name="observations" id="observations"
-                cols="30" rows="4"
+
         >
     </textarea>
 
@@ -36,17 +39,17 @@
 
     <?php foreach ($mediciones as $medicion): ?>
         <div class="temp-elem">
-            <p><?= $mediciones[0]->fecha ?> </p>
-            <p><?= $mediciones[0]->observaciones ?></p>
+            <p><?= $medicion->fecha ?> </p>
+            <p><?= $medicion->observaciones ?></p>
             <p>
                 <span class="max">
-                    <?= $mediciones[0]->temp_max ?>°C
+                    <?= $medicion->temp_max ?>°C
                 </span>
                 <span class="min">
-                    <?= $mediciones[0]->temp_min ?>°C
+                    <?= $medicion->temp_min ?>°C
                 </span>
             </p>
-            <p><?= $mediciones[0]->prev_precipita ?>%</p>
+            <p><?= $medicion->prev_precipita ?>%</p>
         </div>
     <?php endforeach; ?>
 
