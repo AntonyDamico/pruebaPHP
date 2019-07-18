@@ -1,6 +1,9 @@
 # Antony D'Amico
+Prueba de PHP para hogarazul
 
 # Instrucciones
+Pulsar el boton verde `clone or download` y luego `download zip` para obtener los archivos del
+código.
 
 ## Credenciales
 Las credenciales van a ir en el archivo config.php
